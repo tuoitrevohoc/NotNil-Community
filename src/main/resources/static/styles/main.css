@@ -1,0 +1,75 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Roboto;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 60px auto 0px;
+}
+
+.code-editor {
+    width: 100%;
+    min-height: 400px;
+    transition-duration: 0.5s;
+}
+
+.small .code-editor {
+    min-height: 150px;
+}
+
+.ui.segment.code-editor {
+    background-color: #272822;
+}
+
+div.ui.segments {
+    border-radius: 0;
+}
+
+.ui.button {
+    border-radius: 0;
+}
+
+.ui.feed > .event > .label img {
+    border-radius: 3px;
+}
+
+.ui.left.sidebar {
+    top: 46px;
+}
+
+.ui.image {
+    max-width: 400px;
+    border-radius: 3px;
+}
+
+code {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    padding: 2px;
+}
+
+.test {
+    color: white;
+}
+
+.passed.test {
+    background-color: #21ba45 !important;
+}
+
+.failed.test {
+    background-color: indianred !important;
+}
+
+.ui.small.like.button {
+    padding: 7px 10px;
+}
+
+.center.align {
+    text-align: center;
+}
+
+i.big.icon {
+    font-size: 100px !important;
+}

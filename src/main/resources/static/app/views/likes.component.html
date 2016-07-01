@@ -1,0 +1,19 @@
+<a *ngIf="globalService.currentUser" 
+    [class]="'ui small like button' + (isLiked() ? ' positive' : '')" 
+    (click)="onLikeClicked()">
+  <i class="like icon"></i>
+  <span>
+    Like
+  </span>
+</a>
+&nbsp; 
+<span *ngIf="likes.length > 0">
+  <a>
+    {{ likes[0].fullName }}
+  </a> 
+  <span *ngIf="likes.length > 1">
+    and {{ likes.length - 1 }} <a>other<span *ngIf="likes.length > 2">s</span></a>
+  </span> 
+  like<span *ngIf="likes.length == 1">s</span>
+  this
+</span>
