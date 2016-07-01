@@ -1,6 +1,18 @@
 import { Injectable } from '@angular/core'
 import { User } from './data'
 
+export class Subscription {
+  constructor(private manager: EventManager,
+              private func: Function) {
+  }
+
+  unsubscribe() {
+    this.manager.unsubcribe(this.func)
+  }
+
+}
+
+
 ///
 /// the event manager
 export class EventManager {
@@ -18,7 +30,8 @@ export class EventManager {
 
   /// subcribe the event 
   subcribe(listener: Function) {
-    return this.listeners.push(listener)
+    this.listeners.push(listener)
+    return new Subscription(this, listener)
   }
 
   /// unsubcribe

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core'
-import { GlobalService } from '../services/global-service'
+import { Component, OnInit, Input, OnDestroy } from '@angular/core'
+import { GlobalService, Subscription } from '../services/global-service'
 import { Http } from '@angular/http'
 import { User } from '../services/data'
 
@@ -8,7 +8,7 @@ import { User } from '../services/data'
   selector: 'likes-component',
   templateUrl: 'likes.component.html'
 })
-export class LikeComponent implements OnInit {
+export class LikeComponent implements OnInit, OnDestroy {
 
   // list of users who like the post
   @Input() likes: User[]
@@ -20,16 +20,24 @@ export class LikeComponent implements OnInit {
 
   currentUser: User
 
+  subscription: Subscription
+
   constructor(private globalService: GlobalService,
               private http: Http) { 
+    this.subscription = globalService.channel("login").subcribe(
+      (user) => this.currentUser = user
+    )
   }
 
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
+
   isLiked() {
-    this.currentUser = this.globalService.currentUser
-    var userId = this.globalService.currentUser ? this.globalService.currentUser.id : 0
+    var userId = this.currentUser ? this.currentUser.id : 0
     return this.likes && this.likes.filter(like => like.id == userId).length > 0
   }
 
