@@ -19,10 +19,12 @@ export class ChallengeComponent implements OnInit, AfterViewInit {
   @Input() challenge: Challenge
 
   // reply with solution
-  withSolution: boolean = false
+  withSolution = false
+
+  deleted = false
 
   // error message
-  error: String
+  error: string
 
   // loading 
   loading: boolean = false
@@ -61,6 +63,21 @@ export class ChallengeComponent implements OnInit, AfterViewInit {
     }
   }
 
+  deleteChallenge() {
+    this.challengeService.deleteChallenge(this.challenge)
+      .subscribe(() =>{
+        this.deleted = true
+      })
+  }
+
+  // delete the reply
+  deleteReply(reply: Reply) {
+    this.challengeService.deleteReply(reply)
+      .subscribe(() =>{
+        reply["deleted"] = true
+      })
+  }
+
   // attach the solution
   attachSolutionChanged() {
     // save old values
@@ -84,6 +101,7 @@ export class ChallengeComponent implements OnInit, AfterViewInit {
           .subscribe((response) => {
                         this.challenge.replies.push(response.json())
                         this.loading = false
+                        this.codeEditor.setCode("")
                       },
                       () => {
                         this.error = "Unable to post reply"

@@ -1,4 +1,4 @@
-<div class="ui stacked segments">
+<div class="ui stacked segments" *ngIf="!deleted">
   <div class="ui segment">
       <div class="ui feed">
           <div class="event">
@@ -17,13 +17,17 @@
                   <div class="meta">
                       <likes-component [likes]="challenge.likes" [url]="'/challenge/'+challenge.id+'/like'">
                       </likes-component>
+                      <a *ngIf="globalService.currentUser && (globalService.currentUser.id == challenge.creator.id || globalSerivce.currentUser.admin)"
+                            (click)="deleteChallenge()">
+                          Delete
+                      </a>
                   </div>
               </div>
           </div>
       </div>
   </div> 
   <div *ngFor="let reply of challenge.replies" class="ui segment">
-      <div class="ui feed">
+      <div class="ui feed" *ngIf="!reply.deleted">
           <div class="event">
               <div class="label">
                   <img [src]="reply.creator.profilePicture">
@@ -52,13 +56,17 @@
                       <a *ngIf="reply.code">
                           <i class="code icon"></i>View Solution
                       </a>
-                      <a *ngIf="globalService.currentUser && globalService.currentUser.id == reply.creator.id">
+                      <a *ngIf="globalService.currentUser && (globalService.currentUser.id == reply.creator.id || globalSerivce.currentUser.admin)"
+                            (click)="deleteReply(reply)">
                           Delete
                       </a>
                   </div>
               </div>
           </div>
       </div>
+      <div *ngIf="reply.deleted" class="ui segment negative message">
+        Reply has been deleted!!
+    </div>
   </div>
   <code-editor [hidden]="!globalService.currentUser" 
                 [class]="withSolution ? '' : 'small'">
@@ -116,5 +124,8 @@
       </tr>
     </tbody>
   </table>
+</div>
+<div *ngIf="deleted" class="ui segment negative message">
+    Challenge has been deleted!!
 </div>
 <br />

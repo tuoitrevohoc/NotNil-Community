@@ -14,6 +14,16 @@ export class ChallengeService {
     return this.http.post("/challenge", JSON.stringify(challenge))
   } 
 
+  /// delete a challenge
+  deleteChallenge(challenge: Challenge) {
+    return this.http.delete("/challenge/" + challenge.id)
+  }
+
+  /// delete a reply
+  deleteReply(reply: Reply) {
+    return this.http.delete("/reply/" + reply.id)
+  }
+
   // post a reply
   addReply(challenge: Challenge, reply: Reply) {
     return this.http.post('/challenge/' + challenge.id + '/reply', JSON.stringify(reply))

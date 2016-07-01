@@ -3,6 +3,7 @@ package notnil.controller
 import notnil.extension.user
 import notnil.extension.xor
 import notnil.model.User
+import notnil.repository.ChallengeRepository
 import notnil.repository.ReplyRepository
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,7 +17,8 @@ import java.util.*
  */
 @RequestMapping("/reply")
 @RestController open class ReplyController(
-        val replyRepository: ReplyRepository
+        val replyRepository: ReplyRepository,
+        val challengeRepository: ChallengeRepository
 ) {
 
     /**
@@ -44,7 +46,11 @@ import java.util.*
         val reply = replyRepository.findOne(replyId)
         val user = principal.user()
 
-        if (reply.creator!!.id.equals(user.id) || user.isAdmin()) {
+        if (reply.creator.id.equals(user.id) || user.isAdmin()) {
+            val challenge = challengeRepository.findOneByReplies(reply)
+            challenge.replies.removeIf { i -> i.id.equals(reply.id) }
+
+            challengeRepository.save(challenge)
             replyRepository.delete(replyId)
         }
 
