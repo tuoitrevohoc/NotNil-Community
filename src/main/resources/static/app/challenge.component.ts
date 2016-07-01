@@ -98,12 +98,12 @@ export class ChallengeComponent implements OnInit, AfterViewInit {
   // on reply clicked
   replyClicked(submit: boolean = false) {
     var content = this.codeEditor.getCode()
-
+    this.loading = true
+    
     if (!this.withSolution) {  
       var reply: Reply = {}
       reply.content = content
 
-      this.loading = true
       this.challengeService.addReply(this.challenge, reply)
           .subscribe((response) => {
                         this.challenge.replies.push(response.json())
