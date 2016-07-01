@@ -211,13 +211,13 @@ assert(expected: -1, actual: add(a: 1, b: -2))
       this.loading = false
       this.globalService.channel("gift-dialog")
           .emit({
-            'dialogTitle': "Congratulation",
+            'title': "Congratulation",
             'message': "Your post has been saved!"
           })
 
       this.globalService.channel("new-challenge")
           .emit(challenge.json())
-          
+
       this.showPostForm = false
     },
     () => { 

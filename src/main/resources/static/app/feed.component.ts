@@ -24,7 +24,7 @@ export class FeedComponent implements OnInit {
       (data) => this.challenges = data.json() as Challenge[]
     )
 
-    this.globalService.channel("new-solution")
+    this.globalService.channel("new-challenge")
       .subcribe((challenge) => {
         this.challenges.unshift(challenge)
       })
