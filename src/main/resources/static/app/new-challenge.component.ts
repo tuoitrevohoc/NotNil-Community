@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { CodeEditorComponent } from './code-editor.component'
-import { Challenge, Test, Definition, FunctionDefinition } from './services/data'
+import { Challenge, User, Test, Definition, FunctionDefinition } from './services/data'
 import { ChallengeService } from './services/challenge-service'
 import { MarkUpPipe } from './pipes/mark-up.pipe'
 import { GlobalService } from './services/global-service'
@@ -28,6 +28,8 @@ export class NewChallengeComponent implements OnInit {
   error: string
   loading: boolean
   parseError: string
+  currentUser: User
+
   challenge: Challenge = {
     definition: {
       input: [],
@@ -78,6 +80,7 @@ assert(expected: -1, actual: add(a: 1, b: -2))
   /// the global service
   constructor(private challengeService: ChallengeService,
               private globalService: GlobalService) {
+      this.globalService.channel("login").subcribe((user) => this.currentUser = user)
   }
 
   /// 

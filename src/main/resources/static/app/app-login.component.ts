@@ -34,6 +34,7 @@ export class AppLoginComponent implements OnInit {
     this.userService.loginByFacebook(accessToken, (loggedInUser) => {
       this.user = loggedInUser
       this.globalService.currentUser = loggedInUser
+      this.globalService.channel("login").emit(this.user)
     })
   }
 

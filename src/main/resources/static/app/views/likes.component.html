@@ -1,4 +1,4 @@
-<a *ngIf="globalService.currentUser" 
+<a *ngIf="currentUser" 
     [class]="'ui small like button' + (isLiked() ? ' positive' : '')" 
     (click)="onLikeClicked()">
   <i class="like icon"></i>

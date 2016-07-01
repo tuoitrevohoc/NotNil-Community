@@ -9,7 +9,7 @@
                   <div class="summary">
                       <a>{{ challenge.creator.fullName }}</a> posted <a>a challenge</a>
                       <div class="date">
-                          {{ challenge.createAt | date }}
+                          {{ challenge.createAt | dateTime }}
                       </div>
                   </div>
                   <div class="extra text" [innerHtml]="challenge.document | markUp ">
@@ -17,7 +17,7 @@
                   <div class="meta">
                       <likes-component [likes]="challenge.likes" [url]="'/challenge/'+challenge.id+'/like'">
                       </likes-component>
-                      <a *ngIf="globalService.currentUser && (globalService.currentUser.id == challenge.creator.id || globalSerivce.currentUser.admin)"
+                      <a *ngIf="currentUser && (currentUser.id == challenge.creator.id || currentUser.admin)"
                             (click)="deleteChallenge()">
                           Delete
                       </a>
@@ -37,7 +37,7 @@
                       <a>{{ reply.creator.fullName }}</a>
                       <span *ngIf="reply.code">reply with <b>a solution</b></span>
                       <div class="date">
-                        {{ reply.createAt | date }}
+                        {{ reply.createAt | dateTime }}
                       </div>
                   </div>
                   <div [innerHTML]="reply.content | markUp">
@@ -56,7 +56,7 @@
                       <a *ngIf="reply.code">
                           <i class="code icon"></i>View Solution
                       </a>
-                      <a *ngIf="globalService.currentUser && (globalService.currentUser.id == reply.creator.id || globalSerivce.currentUser.admin)"
+                      <a *ngIf="currentUser && (currentUser.id == reply.creator.id || currentUser.admin)"
                             (click)="deleteReply(reply)">
                           Delete
                       </a>
@@ -68,12 +68,12 @@
         Reply has been deleted!!
     </div>
   </div>
-  <code-editor [hidden]="!globalService.currentUser" 
+  <code-editor [hidden]="!currentUser" 
                 [class]="withSolution ? '' : 'small'">
   </code-editor>
   <div *ngIf="error" [innerHTML]="error" class="ui segment negative message">
   </div>
-  <div *ngIf="globalService.currentUser" class="ui segment">
+  <div *ngIf="currentUser" class="ui segment">
       <div class="meta">
           <div class="ui checkbox">
               <input type="checkbox" [(checked)]="withSolution" (change)="attachSolutionChanged()" />

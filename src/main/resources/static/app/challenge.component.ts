@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core'
-import { Challenge, Reply, Solution } from './services/data'
+import { Challenge, User, Reply, Solution } from './services/data'
 import { LikeComponent } from './views/likes.component'
 import { CodeEditorComponent } from './code-editor.component'
 import { ChallengeService } from './services/challenge-service'
 import { MarkUpPipe } from './pipes/mark-up.pipe'
+import { DateTimePipe } from './pipes/date-time'
 import { GlobalService } from './services/global-service'
 
 @Component({
@@ -11,7 +12,7 @@ import { GlobalService } from './services/global-service'
   selector: 'challenge-component',
   templateUrl: 'challenge.component.html',
   directives: [LikeComponent, CodeEditorComponent],
-  pipes: [ MarkUpPipe ]
+  pipes: [ MarkUpPipe, DateTimePipe ]
 })
 export class ChallengeComponent implements OnInit, AfterViewInit {
 
@@ -35,11 +36,17 @@ export class ChallengeComponent implements OnInit, AfterViewInit {
   // the reply
   reply: Solution
 
+  currentUser: User
+
   // code editor view child
   @ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent
 
   constructor(private challengeService: ChallengeService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService) {
+      this.globalService.channel("login").subcribe(
+        (user) => this.currentUser = user
+      )
+  }
 
   ngOnInit() { 
     

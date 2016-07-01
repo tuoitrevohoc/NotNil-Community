@@ -18,13 +18,17 @@ export class LikeComponent implements OnInit {
 
   active = false
 
+  currentUser: User
+
   constructor(private globalService: GlobalService,
-              private http: Http) { }
+              private http: Http) { 
+  }
 
   ngOnInit() {
   }
 
   isLiked() {
+    this.currentUser = this.globalService.currentUser
     var userId = this.globalService.currentUser ? this.globalService.currentUser.id : 0
     return this.likes && this.likes.filter(like => like.id == userId).length > 0
   }
