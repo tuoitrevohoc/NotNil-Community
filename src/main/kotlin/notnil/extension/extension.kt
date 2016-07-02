@@ -12,7 +12,7 @@ import java.util.function.BiPredicate
  * Get user from principal
  */
 fun Principal.user() =
-        (this as UserAuthenticationToken)?.user
+        (this as UserAuthenticationToken).user
 
 
 /**

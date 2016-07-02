@@ -25,7 +25,6 @@ class UserController (val userRepository: UserRepository) {
      */
     @RequestMapping("/fbLogin")
     fun loginWithFacebook(@RequestBody accessToken: String,
-                          session: HttpSession,
                           principal: Principal?): User {
         var user = principal?.user()
 

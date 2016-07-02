@@ -1,0 +1,131 @@
+<div class="ui stacked segments" *ngIf="!deleted">
+  <div class="ui segment">
+      <div class="ui feed">
+          <div class="event">
+              <div class="label">
+                  <img [src]="challenge.creator.profilePicture">
+              </div>
+              <div class="content">
+                  <div class="summary">
+                      <a>{{ challenge.creator.fullName }}</a> posted <a>a challenge</a>
+                      <div class="date">
+                          {{ challenge.createAt | dateTime }}
+                      </div>
+                  </div>
+                  <div class="extra text" [innerHtml]="challenge.document | markUp ">
+                  </div>
+                  <div class="meta">
+                      <app-like-view [likes]="challenge.likes" [url]="'/challenge/'+challenge.id+'/like'">
+                      </app-like-view>
+                      <a *ngIf="currentUser && (currentUser.id == challenge.creator.id || currentUser.admin)"
+                            (click)="deleteChallenge()">
+                          Delete
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> 
+  <div *ngFor="let reply of challenge.replies" class="ui segment">
+      <div class="ui feed" *ngIf="!reply.deleted">
+          <div class="event">
+              <div class="label">
+                  <img [src]="reply.creator.profilePicture">
+              </div>
+              <div class="content">
+                  <div class="summary">
+                      <a>{{ reply.creator.fullName }}</a>
+                      <span *ngIf="reply.code">reply with <b>a solution</b></span>
+                      <div class="date">
+                        {{ reply.createAt | dateTime }}
+                      </div>
+                  </div>
+                  <div [innerHTML]="reply.content | markUp">
+                  </div>
+                  <div class="meta">
+                      <app-like-view 
+                            [likes]="reply.likes"
+                            [url]="'/reply/'+reply.id+'/like'">
+                      </app-like-view>
+                      <span *ngIf="reply.code">
+                          {{ reply.codeLength }} characters
+                      </span>
+                      <span *ngIf="reply.reward">
+                          {{ reply.reward }} coins
+                      </span>
+                      <a *ngIf="reply.code">
+                          <i class="code icon"></i>View Solution
+                      </a>
+                      <a *ngIf="currentUser && (currentUser.id == reply.creator.id || currentUser.admin)"
+                            (click)="deleteReply(reply)">
+                          Delete
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div *ngIf="reply.deleted" class="ui segment negative message">
+        Reply has been deleted!!
+    </div>
+  </div>
+  <code-editor [hidden]="!currentUser" 
+                [class]="withSolution ? '' : 'small'">
+  </code-editor>
+  <div *ngIf="error" [innerHTML]="error" class="ui segment negative message">
+  </div>
+  <div *ngIf="currentUser" class="ui segment">
+      <div class="meta">
+          <div class="ui checkbox">
+              <input type="checkbox" [(checked)]="withSolution" (change)="attachSolutionChanged()" />
+              <label>Add solution</label>
+          </div>
+          &nbsp;
+          <button *ngIf="withSolution"
+                  [class]="(loading ? 'loading' : '') + ' ui button'"
+                  (click)="replyClicked()">
+              Test
+          </button>
+          <button [class]="(loading ? 'loading' : '') + ' ui positive button'"
+                  (click)="replyClicked(true)">
+              <i class="checkmark icon"></i>
+              Reply
+          </button>
+      </div>
+  </div>
+  <table *ngIf="withSolution" class="ui segment celled striped table" style="width: 100%">
+    <thead>
+      <tr>
+        <th colspan="3">
+          Tests: 
+          <span *ngIf="reply && reply.result && reply.result.tests.length">
+              {{ reply.result.passedTests }} / {{ reply.result.tests.length }}
+              Hidden Tests: {{ reply.result.passedHiddenTests }} / {{ reply.result.hiddenTests.length }}
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let test of challenge.tests; let i = index"
+        [class]="reply && reply.result && reply.result.tests && reply.result.tests[i] ? 'passed test': 'failed test'">
+        <td>
+            <code>{{ test.test }}</code>
+        </td>
+        <td class="collapsing" style="min-width: 100px">
+          <code>{{ test.expected }}</code>
+        </td>
+        <td>
+            <span *ngIf="reply && reply.result && reply.result.tests && reply.result.tests[i]">
+                <i class="checkmark icon"></i>
+            </span>
+            <span *ngIf="!reply || !reply.result || !reply.result.tests || !reply.result.tests[i]">
+                <i class="minus circle icon"></i>
+            </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="deleted" class="ui segment negative message">
+    Challenge has been deleted!!
+</div>
+<br />
