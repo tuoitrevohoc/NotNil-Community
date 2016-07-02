@@ -1,6 +1,9 @@
 .idea
+dist
+npm-debug.log
 target
 src/main/resources/static/node_modules
 src/main/resources/static/typings
 src/main/resources/static/app/**/*.js
 src/main/resources/static/app/**/*.js.map
+
