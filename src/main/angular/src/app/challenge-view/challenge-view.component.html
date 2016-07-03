@@ -16,7 +16,7 @@
                   <div class="extra text" [innerHtml]="challenge.document | markUp ">
                   </div>
                   <div class="meta">
-                      <app-like-view [likes]="challenge.likes" [url]="'/challenge/'+challenge.id+'/like'">
+                      <app-like-view [likes]="challenge.likes" [url]="'/api/challenge/'+challenge.id+'/like'">
                       </app-like-view>
                       <a *ngIf="currentUser && (currentUser.id == challenge.creator.id || currentUser.admin)"
                             (click)="deleteChallenge()">
@@ -46,7 +46,7 @@
                   <div class="meta">
                       <app-like-view 
                             [likes]="reply.likes"
-                            [url]="'/reply/'+reply.id+'/like'">
+                            [url]="'/api/reply/'+reply.id+'/like'">
                       </app-like-view>
                       <span *ngIf="reply.code">
                           {{ reply.codeLength }} characters
