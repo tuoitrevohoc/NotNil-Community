@@ -32,14 +32,17 @@ export class FacebookConnectService {
   // check login status
   getLoginStatus(response: (Function)) {
     FB.getLoginStatus((data) => {
-      response(data.authResponse.accessToken)
+      if (data.authResponse && data.authResponse.accessToken) {
+        response(data.authResponse.accessToken)
+      }
     })
   }
 
   // login
   login(response: Function) {
     FB.login((data) => {
-      response((data as any).accessToken)
+      console.log(data)
+      response((data as any).authResponse.accessToken)
     })
   }
 }
