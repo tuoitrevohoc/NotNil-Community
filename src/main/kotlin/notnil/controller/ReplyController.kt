@@ -15,7 +15,7 @@ import java.util.*
 /**
  * Controller who controls reply operation
  */
-@RequestMapping("/reply")
+@RequestMapping("/api/reply")
 @RestController open class ReplyController(
         val replyRepository: ReplyRepository,
         val challengeRepository: ChallengeRepository

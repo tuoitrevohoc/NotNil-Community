@@ -9,32 +9,37 @@ export class ChallengeService {
   constructor(private http: Http) {
   }
 
+  // get the challenge
+  get(id: string) {
+    return this.http.get("/api/challenge/" + id)
+  }
+
   /// save the challege
   save(challenge: Challenge) {
-    return this.http.post("/challenge", JSON.stringify(challenge))
+    return this.http.post("/api/challenge", JSON.stringify(challenge))
   } 
 
   /// delete a challenge
   deleteChallenge(challenge: Challenge) {
-    return this.http.delete("/challenge/" + challenge.id)
+    return this.http.delete("/api/challenge/" + challenge.id)
   }
 
   /// delete a reply
   deleteReply(reply: Reply) {
-    return this.http.delete("/reply/" + reply.id)
+    return this.http.delete("/api/reply/" + reply.id)
   }
 
   // post a reply
   addReply(challenge: Challenge, reply: Reply) {
-    return this.http.post('/challenge/' + challenge.id + '/reply', JSON.stringify(reply))
+    return this.http.post('/api/challenge/' + challenge.id + '/reply', JSON.stringify(reply))
   }
 
   // test a solution
   testSolution(challenge: Challenge, solution: Solution, submit: boolean) {
-    var url = '/challenge/' + challenge.id + '/test';
+    var url = '/api/challenge/' + challenge.id + '/test';
 
     if (submit) {
-      url  = '/challenge/' + challenge.id + '/submit'
+      url  = '/api/challenge/' + challenge.id + '/submit'
     }
 
     return this.http.post(url, JSON.stringify(solution))
@@ -42,6 +47,6 @@ export class ChallengeService {
 
   /// get latest challeges
   getLatest() {
-    return this.http.get("/challenge/feed")
+    return this.http.get("/api/challenge/feed")
   }
 }

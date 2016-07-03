@@ -7,3 +7,5 @@ src/main/resources/static/typings
 src/main/resources/static/app/**/*.js
 src/main/resources/static/app/**/*.js.map
 
+
+static

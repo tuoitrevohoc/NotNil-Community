@@ -5,6 +5,7 @@ import { FacebookConnectService } from './app/services/facebook-connect.service'
 import { GlobalService } from './app/services/global.service'
 import { UserService } from './app/services/user.service'
 import { ChallengeService } from './app/services/challenge.service'
+import { AppRoutes } from './app/app.routes'
 
 import { Http, ConnectionBackend, HTTP_PROVIDERS, BaseRequestOptions, RequestOptions, Headers } from '@angular/http'
 
@@ -27,5 +28,6 @@ bootstrap(AppComponent,
                 UserService,
                 ChallengeService,
                 GlobalService,
-                provide(RequestOptions, {useClass: HttpOptions})])
+                provide(RequestOptions, {useClass: HttpOptions}),
+                AppRoutes])
 

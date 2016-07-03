@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+
 import { CodeEditorComponent } from '../code-editor'
+import { ErrorComponent } from '../error'
+
 import { Challenge, User, Test, Definition, FunctionDefinition } from '../services/data'
 import { ChallengeService } from '../services/challenge.service'
+
 import { MarkUpPipe } from '../pipes/mark-up.pipe'
 import { GlobalService } from '../services/global.service'
 
@@ -15,7 +19,7 @@ class Type {
   moduleId: module.id,
   selector: 'app-challenge-editor',
   templateUrl: 'challenge-editor.component.html',
-  directives: [ CodeEditorComponent ],
+  directives: [ CodeEditorComponent, ErrorComponent ],
   pipes: [ MarkUpPipe ]
 })
 export class ChallengeEditorComponent implements OnInit {

@@ -1,8 +1,12 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core'
+import { Component, OnInit, Input, ViewChild, AfterViewInit, OnChanges } from '@angular/core'
+import { ROUTER_DIRECTIVES } from '@angular/router'
+
 import { Challenge, User, Reply, Solution } from '../services/data'
 
 import { LikeViewComponent } from '../like-view'
 import { CodeEditorComponent } from '../code-editor'
+import { ErrorComponent } from '../error'
+
 
 import { ChallengeService } from '../services/challenge.service'
 import { GlobalService } from '../services/global.service'
@@ -10,12 +14,11 @@ import { GlobalService } from '../services/global.service'
 import { MarkUpPipe } from '../pipes/mark-up.pipe'
 import { DateTimePipe } from '../pipes/date-time.pipe'
 
-
 @Component({
   moduleId: module.id,
   selector: 'app-challenge-view',
   templateUrl: 'challenge-view.component.html',
-  directives: [LikeViewComponent, CodeEditorComponent],
+  directives: [LikeViewComponent, CodeEditorComponent, ErrorComponent, ROUTER_DIRECTIVES],
   pipes: [ MarkUpPipe, DateTimePipe ]
 })
 export class ChallengeViewComponent implements OnInit {
@@ -45,6 +48,7 @@ export class ChallengeViewComponent implements OnInit {
   // code editor view child
   @ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent
 
+  // the constructor
   constructor(private challengeService: ChallengeService,
               private globalService: GlobalService) {
       this.globalService.channel("login").subcribe(
@@ -58,7 +62,12 @@ export class ChallengeViewComponent implements OnInit {
 
   // after the view is initialized
   ngAfterViewInit() {
-    this.updateCodeEditor()
+    console.log("View Init")
+    console.log(this.challenge)
+    
+    if (this.challenge) {
+      this.updateCodeEditor()
+    }
   }
 
   // update the code editor

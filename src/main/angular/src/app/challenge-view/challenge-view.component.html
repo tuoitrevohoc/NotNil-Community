@@ -7,7 +7,8 @@
               </div>
               <div class="content">
                   <div class="summary">
-                      <a>{{ challenge.creator.fullName }}</a> posted <a>a challenge</a>
+                      <a>{{ challenge.creator.fullName }}</a> posted 
+                            <a [routerLink]="['/challenge', challenge.id]">a challenge</a>
                       <div class="date">
                           {{ challenge.createAt | dateTime }}
                       </div>
@@ -71,8 +72,7 @@
   <code-editor [hidden]="!currentUser" 
                 [class]="withSolution ? '' : 'small'">
   </code-editor>
-  <div *ngIf="error" [innerHTML]="error" class="ui segment negative message">
-  </div>
+  <app-error [error]="error"></app-error>
   <div *ngIf="currentUser" class="ui segment">
       <div class="meta">
           <div class="ui checkbox">

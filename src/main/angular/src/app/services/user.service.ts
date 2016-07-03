@@ -13,7 +13,7 @@ export class UserService {
   /// login by facebook
   loginByFacebook(accessToken: string, onSuccess: Function) {
 
-    this.http.post("/user/fbLogin", accessToken)
+    this.http.post("/api/user/fbLogin", accessToken)
         .subscribe(
           response => {
             var data = response.json()

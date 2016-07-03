@@ -13,7 +13,7 @@ import java.security.Principal
 /**
  * The page controller
  */
-@RequestMapping("/page")
+@RequestMapping("/api/page")
 @RestController open class PageController(
         val pageRepository: PageRepository,
         val userRepository: UserRepository

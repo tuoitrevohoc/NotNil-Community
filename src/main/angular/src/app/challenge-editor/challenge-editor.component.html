@@ -22,12 +22,8 @@
     </div>
   </div>
   <code-editor *ngIf="showPostForm" [code]="code" (change)="updateChallenge($event)"></code-editor>
-  <div *ngIf="parseError" class="ui segment negative message">
-    {{ parseError }}
-  </div>
-  <div *ngIf="error" class="ui segment negative message">
-    {{ error }}
-  </div>
+  <app-error [error]="parseError"></app-error>
+  <app-error [error]="error"></app-error>
   <div *ngIf="showPostForm" 
         class="ui pointing menu segment" style="padding: 0">
     <a [class]="'item ' + (!tabIndex ? 'active' : '')" (click)='tabIndex = 0'>

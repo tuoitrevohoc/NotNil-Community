@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession
  * The user controller
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 class UserController (val userRepository: UserRepository) {
 
     /**

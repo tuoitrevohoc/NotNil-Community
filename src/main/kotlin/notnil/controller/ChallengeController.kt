@@ -19,7 +19,7 @@ import java.util.*
  * The problem controller
  */
 @RestController
-@RequestMapping("/challenge")
+@RequestMapping("/api/challenge")
 class ChallengeController(val challengeRepository: ChallengeRepository,
                           val replyRepository: ReplyRepository,
                           val userRepository: UserRepository){
@@ -27,11 +27,28 @@ class ChallengeController(val challengeRepository: ChallengeRepository,
 
     val BaseReward = 100
 
+
     /// get latest post
     @RequestMapping("/feed")
     fun getLatest() = challengeRepository.findAll(
                         Sort(Sort.Order(Sort.Direction.DESC, "createAt")))
 
+    /**
+     * get challenge
+     */
+    @RequestMapping("/{challengeId}")
+    fun get(@PathVariable("challengeId") challengeId: String, principal: Principal?)
+            : Challenge {
+        val challenge = challengeRepository.findOne(challengeId)
+        val user = principal?.user()
+
+        if (user == null || (!user.isAdmin() && !user.id.equals(challenge.creator.id))) {
+            challenge.testCode = ""
+        }
+
+        return  challenge
+
+    }
 
     /**
      * save the problem
