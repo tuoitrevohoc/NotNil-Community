@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { User } from '../services/data'
 import { FacebookConnectService } from '../services/facebook-connect.service'
 import { GlobalService } from '../services/global.service'
@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
 // the loggedIn user
   user: User
 
+  zone: NgZone
+
   // constructor
   constructor(private facebookConnect: FacebookConnectService,
               private userService: UserService,
@@ -22,9 +24,12 @@ export class LoginComponent implements OnInit {
 
   // initialize 
   ngOnInit() { 
+    this.zone = new NgZone({ enableLongStackTrace: true })
     // check facebook connecting status
     this.facebookConnect.initSDK(() => {
-      this.facebookConnect.getLoginStatus(this.facebookLoggedIn.bind(this))
+      this.facebookConnect.getLoginStatus((accessToken) => {
+        this.zone.run( () => this.facebookLoggedIn(accessToken))
+      })
     })
   }
 

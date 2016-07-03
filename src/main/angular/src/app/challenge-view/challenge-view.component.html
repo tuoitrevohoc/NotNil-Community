@@ -19,6 +19,10 @@
                       <app-like-view [likes]="challenge.likes" [url]="'/api/challenge/'+challenge.id+'/like'">
                       </app-like-view>
                       <a *ngIf="currentUser && (currentUser.id == challenge.creator.id || currentUser.admin)"
+                            [routerLink]="['/challenge', challenge.id, '/edit']">
+                          Edit
+                      </a>
+                      <a *ngIf="currentUser && (currentUser.id == challenge.creator.id || currentUser.admin)"
                             (click)="deleteChallenge()">
                           Delete
                       </a>
