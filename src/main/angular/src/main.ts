@@ -16,7 +16,6 @@ if (environment.production) {
 
 class HttpOptions extends BaseRequestOptions {
   headers = new Headers({ 'Content-Type': 'application/json' })
-  url = "http://notnil.com:8080/"
 }
 
 bootstrap(AppComponent,
@@ -29,5 +28,6 @@ bootstrap(AppComponent,
                 ChallengeService,
                 GlobalService,
                 provide(RequestOptions, {useClass: HttpOptions}),
-                AppRoutes])
+                AppRoutes
+            ])
 

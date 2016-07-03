@@ -30,6 +30,8 @@ export class ChallengeViewComponent extends BaseComponent implements OnInit {
   // reply with solution
   withSolution = false
 
+  solutionLength = 0
+
   deleted = false
 
   // cache value
@@ -53,12 +55,14 @@ export class ChallengeViewComponent extends BaseComponent implements OnInit {
 
   // after the view is initialized
   ngAfterViewInit() {
-    console.log("View Init")
-    console.log(this.challenge)
-
     if (this.challenge) {
       this.updateCodeEditor()
     }
+  }
+
+  // on code change
+  codeChanged(code: string) {
+    this.solutionLength = code.replace(/\s/g, '').length
   }
 
   // update the code editor

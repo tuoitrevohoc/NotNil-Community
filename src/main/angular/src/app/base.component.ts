@@ -16,7 +16,7 @@ export class BaseComponent implements OnDestroy {
     // loading 
     loading: boolean = false
 
-    constructor(public globalService: GlobalService) {
+    constructor(protected globalService: GlobalService) {
         this.currentUser = globalService.currentUser
         this.subscription = this.globalService.channel("login")
             .subcribe((user) => this.currentUser = user)

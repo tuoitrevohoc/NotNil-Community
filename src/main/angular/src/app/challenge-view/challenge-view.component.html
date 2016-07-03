@@ -74,6 +74,7 @@
     </div>
   </div>
   <code-editor [hidden]="!currentUser" 
+                (change)="codeChanged($event)"
                 [class]="withSolution ? '' : 'small'">
   </code-editor>
   <app-error [error]="error"></app-error>
@@ -93,6 +94,9 @@
                   (click)="replyClicked(true)">
               <i class="checkmark icon"></i>
               Reply
+              <span *ngIf="withSolution">
+                  ({{ solutionLength }} characters)
+              </span>
           </button>
       </div>
   </div>
