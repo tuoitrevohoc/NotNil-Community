@@ -43,7 +43,9 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginClicked() {
-    this.facebookConnect.login(this.facebookLoggedIn.bind(this))
+    this.facebookConnect.login((accessToken) => {
+      this.zone.run( () => this.facebookLoggedIn(accessToken))
+    })
   }
 
 }
