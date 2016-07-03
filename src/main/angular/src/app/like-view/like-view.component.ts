@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core'
+import { BaseComponent } from '../base.component'
 import { GlobalService, Subscription } from '../services/global.service'
 import { Http } from '@angular/http'
 import { User } from '../services/data'
@@ -8,7 +9,7 @@ import { User } from '../services/data'
   selector: 'app-like-view',
   templateUrl: 'like-view.component.html'
 })
-export class LikeViewComponent implements OnInit {
+export class LikeViewComponent extends BaseComponent implements OnInit {
 
     // list of users who like the post
   @Input() likes: User[]
@@ -18,15 +19,11 @@ export class LikeViewComponent implements OnInit {
 
   active = false
 
-  currentUser: User
-
   subscription: Subscription
 
-  constructor(private globalService: GlobalService,
+  constructor(globalService: GlobalService,
               private http: Http) { 
-    this.subscription = globalService.channel("login").subcribe(
-      (user) => this.currentUser = user
-    )
+    super(globalService)
   }
 
   ngOnInit() {

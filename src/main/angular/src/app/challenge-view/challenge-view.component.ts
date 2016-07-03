@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit, OnChanges } from '@angular/core'
+import { BaseComponent } from '../base.component'
 import { ROUTER_DIRECTIVES } from '@angular/router'
 
 import { Challenge, User, Reply, Solution } from '../services/data'
@@ -21,7 +22,7 @@ import { DateTimePipe } from '../pipes/date-time.pipe'
   directives: [LikeViewComponent, CodeEditorComponent, ErrorComponent, ROUTER_DIRECTIVES],
   pipes: [ MarkUpPipe, DateTimePipe ]
 })
-export class ChallengeViewComponent implements OnInit {
+export class ChallengeViewComponent extends BaseComponent implements OnInit {
 
   // the challege to display
   @Input() challenge: Challenge
@@ -31,29 +32,19 @@ export class ChallengeViewComponent implements OnInit {
 
   deleted = false
 
-  // error message
-  error: string
-
-  // loading 
-  loading: boolean = false
-
   // cache value
   values: string[] = []
 
   // the reply
   reply: Solution
 
-  currentUser: User
-
   // code editor view child
   @ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent
 
   // the constructor
   constructor(private challengeService: ChallengeService,
-              private globalService: GlobalService) {
-      this.globalService.channel("login").subcribe(
-        (user) => this.currentUser = user
-      )
+              globalService: GlobalService) {
+      super(globalService)
   }
 
   ngOnInit() { 
@@ -64,7 +55,7 @@ export class ChallengeViewComponent implements OnInit {
   ngAfterViewInit() {
     console.log("View Init")
     console.log(this.challenge)
-    
+
     if (this.challenge) {
       this.updateCodeEditor()
     }

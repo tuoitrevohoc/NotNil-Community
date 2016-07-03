@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { BaseComponent } from '../base.component'
 
 import { CodeEditorComponent } from '../code-editor'
 import { ErrorComponent } from '../error'
@@ -22,17 +23,14 @@ class Type {
   directives: [ CodeEditorComponent, ErrorComponent ],
   pipes: [ MarkUpPipe ]
 })
-export class ChallengeEditorComponent implements OnInit {
+export class ChallengeEditorComponent extends BaseComponent implements OnInit {
 
   @ViewChild("modal") modalDiv: ElementRef
 
   showPostForm =  false
 
   markUpDocument: string
-  error: string
-  loading: boolean
   parseError: string
-  currentUser: User
 
   challenge: Challenge = {
     definition: {
@@ -83,8 +81,8 @@ assert(expected: -1, actual: add(a: 1, b: -2))
 
   /// the global service
   constructor(private challengeService: ChallengeService,
-              private globalService: GlobalService) {
-      this.globalService.channel("login").subcribe((user) => this.currentUser = user)
+              globalService: GlobalService) {
+      super(globalService)
   }
 
   /// 

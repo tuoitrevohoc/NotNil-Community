@@ -1,6 +1,6 @@
 <div class="ui inverted top pointing fixed menu">
-  <a class="brand item">
-    <i class="code icon"></i>Swift Fight
+  <a [routerLink]="'/'" class="brand item">
+    <i class="code icon"></i>Swift.fight()
   </a>
   <a class="item">
     <i class="tags icon"></i>Browse
@@ -8,9 +8,6 @@
   <app-login class="right menu"></app-login>
 </div>
 <div class="slider container">
-  <!--<app-announcer></app-announcer>
-  <app-challenge-editor></app-challenge-editor>
-  <app-feed-view></app-feed-view>-->
   <router-outlet></router-outlet>
 </div>
 
