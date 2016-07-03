@@ -28,6 +28,9 @@ export class ChallengeEditorComponent extends BaseComponent implements OnInit {
 
   @ViewChild("modal") modalDiv: ElementRef
 
+  // code editor view child
+  @ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent
+
   showPostForm =  false
 
   markUpDocument: string
@@ -136,7 +139,8 @@ assert(expected: -1, actual: add(a: 1, b: -2))
     this.challenge = challenge
     this.code = this.challenge.code + "\n/// your test cases - do not remove\n" + this.challenge.testCode
     this.isEditting = true
-    this.updateChallenge(this.code)
+    this.codeEditor.setCode(this.code)
+    //this.updateChallenge(this.code)
   }
 
   /// when clicked on new challege
@@ -222,18 +226,20 @@ assert(expected: -1, actual: add(a: 1, b: -2))
 
   /// update the document
   updateChallenge(code: string) {
-    this.code = code
+    if (code) {
+      this.code = code
 
-    this.challenge.document = this.getDocument(code)
-    this.getChallengeDefinition(code, this.challenge.definition)
-    
-    var codePart = this.code.split("/// your test cases - do not remove")
-    this.challenge.code = codePart[0]
-    this.challenge.testCode = codePart[1]
+      this.challenge.document = this.getDocument(code)
+      this.getChallengeDefinition(code, this.challenge.definition)
+      
+      var codePart = this.code.split("/// your test cases - do not remove")
+      this.challenge.code = codePart[0]
+      this.challenge.testCode = codePart[1]
 
-    var testCode = this.challenge.testCode.split("/// your hidden test cases - do not remove")
-    this.challenge.tests = this.getTests(testCode[0])
-    this.challenge.hiddenTests = this.getTests(testCode[1])
+      var testCode = this.challenge.testCode.split("/// your hidden test cases - do not remove")
+      this.challenge.tests = this.getTests(testCode[0])
+      this.challenge.hiddenTests = this.getTests(testCode[1])
+    }
   }
 
   /**
