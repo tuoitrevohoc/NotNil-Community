@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Router, ActivatedRoute } from '@angular/router'
 import { BaseComponent } from '../base.component'
 
 import { CodeEditorComponent } from '../code-editor'
@@ -30,7 +31,10 @@ export class ChallengeEditorComponent extends BaseComponent implements OnInit {
   showPostForm =  false
 
   markUpDocument: string
+
   parseError: string
+
+  isEditting = false
 
   challenge: Challenge = {
     definition: {
@@ -78,15 +82,60 @@ assert(expected: 3, actual: add(a: 1, b: 2))
 /// your hidden test cases - do not remove
 assert(expected: -1, actual: add(a: 1, b: -2))
   `
+  sub: any
+
 
   /// the global service
   constructor(private challengeService: ChallengeService,
-              globalService: GlobalService) {
+              private router: Router,
+              globalService: GlobalService, 
+              activatedRoute: ActivatedRoute) {
       super(globalService)
-  }
 
+      this.sub = activatedRoute.params
+              .subscribe(params => {
+          console.log(params)
+          if (params["challengeId"]) {
+            if (this.currentUser) {
+              this.loadChallenge(params["challengeId"])
+            } else {
+              var subscribe = this.globalService.channel("login").subcribe((user) => {
+                this.loadChallenge(params["challengeId"])
+                subscribe.unsubscribe()
+              })
+            }
+          }
+      })
+  }
+  
   /// 
   ngOnInit() { 
+    this.updateChallenge(this.code)
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy()
+    this.sub.unsubscribe()
+  }
+
+  loadChallenge(challengeId: string) {
+    this.showPostForm = true
+    this.loading = true
+
+    this.challengeService.get(challengeId)
+        .subscribe((data) => {
+          var challenge = data.json()
+          this.setChallenge(challenge)
+          this.loading = false
+        }, () => this.error = "Couldn't load challenge!!")
+
+  }
+
+  /// set the edited challenge
+  setChallenge(challenge: Challenge) {
+    this.challenge = challenge
+    this.code = this.challenge.code + "\n/// your test cases - do not remove\n" + this.challenge.testCode
+    this.isEditting = true
     this.updateChallenge(this.code)
   }
 
@@ -210,20 +259,23 @@ assert(expected: -1, actual: add(a: 1, b: -2))
 
     this.loading = true
     this.error = null
-
     
     this.challengeService.save(this.challenge).subscribe((challenge) => {
       this.loading = false
       this.globalService.channel("gift-dialog")
           .emit({
             'title': "Congratulation",
-            'message': "Your post has been saved!"
+            'message': "Your challenge has been saved!"
           })
 
       this.globalService.channel("new-challenge")
           .emit(challenge.json())
 
-      this.showPostForm = false
+      if (this.isEditting) {
+        this.router.navigate(['/challenge', this.challenge.id])
+      } else {
+        this.showPostForm = false
+      }
     },
     () => { 
         this.error = "Error Posting Challenge. Try again later."

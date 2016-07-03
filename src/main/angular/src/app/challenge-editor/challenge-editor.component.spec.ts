@@ -14,7 +14,7 @@ import { ChallengeEditorComponent } from './challenge-editor.component';
 
 describe('Component: ChallengeEditor', () => {
   it('should create an instance', () => {
-    let component = new ChallengeEditorComponent(null, null);
+    let component = new ChallengeEditorComponent(null, null, null, null)
     expect(component).toBeTruthy();
   });
 });

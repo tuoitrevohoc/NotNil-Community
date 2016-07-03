@@ -5,8 +5,8 @@ import { ChallengeEditorComponent } from './challenge-editor'
 
 const routes: RouterConfig = [
     { path: '', component: FeedViewComponent },
-    { path: 'challenge/:id', component: ChallengePageComponent },
-    { path: 'challenge/:id/edit', component: ChallengeEditorComponent },
+    { path: 'challenge/:challengeId', component: ChallengePageComponent },
+    { path: 'challenge/:challengeId/edit', component: ChallengeEditorComponent },
 ]
 
 export const AppRoutes = [

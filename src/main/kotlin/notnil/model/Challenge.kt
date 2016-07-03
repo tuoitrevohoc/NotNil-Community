@@ -31,6 +31,9 @@ class Challenge : Post() {
     /// shortest solution
     var shortestSolution = 0
 
+    /// the function definition
+    var definition = FunctionDefinition()
+
     /// if the challenge belongs to an page
     @DBRef var page: Page? = null
 

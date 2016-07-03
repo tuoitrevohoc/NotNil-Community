@@ -31,7 +31,7 @@ export class ChallengePageComponent implements OnInit, OnDestroy {
     this.subscription = this.activateRoute
                             .params
                             .subscribe(params => {
-                              let id = params["id"]
+                              let id = params["challengeId"]
                               this.loadChallenge(id)
                             })
   }
