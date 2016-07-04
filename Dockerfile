@@ -21,10 +21,10 @@ RUN mv swift-3.0-PREVIEW-1-ubuntu14.04 /swift30
 RUN export PATH=$PATH:/swift30/usr/bin
 
 #install java
-RUN wget http://download.oracle.com/otn-pub/java/jdk/8u91-b14/jdk-8u91-linux-x64.tar.gz
-RUN tar -xzf jdk-8u91-linux-x64.tar.gz
-RUN mv jdk-8u91-linux-x64 /jdk
-RUN export JAVA_HOME=/jdk
+RUN add-apt-repository ppa:webupd8team/java
+RUN apt-get update
+RUN apt-get install -y oracle-java8-installer
+RUN apt-get install oracle-java8-set-default
 
 #install maven
 RUN wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
