@@ -11,9 +11,7 @@ RUN apt-get update
 RUN apt-get install -y nodejs build-essential git
 
 # install angular-cli
-RUN npm install angular-cli
-RUN npm install typings
-RUN npm install typescript
+RUN npm install -g angular-cli
 
 #install swift
 RUN apt-get install clang libicu-dev
@@ -32,7 +30,7 @@ RUN export JAVA_HOME=/jdk
 RUN wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 RUN tar -xzf apache-maven-3.3.9-bin.tar.gz
 RUN mv apache-maven-3.3.9-bin /maven
-RUN export PATH=$PATH:/maven/bin 
+RUN export PATH=$PATH:/maven/bin
 
 #get the source code
 WORKDIR /app
