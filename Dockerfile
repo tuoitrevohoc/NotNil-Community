@@ -14,7 +14,7 @@ RUN apt-get install -y nodejs build-essential git
 RUN npm install -g angular-cli
 
 #install swift
-RUN apt-get install clang libicu-dev
+RUN apt-get install -y clang libicu-dev
 RUN wget https://swift.org/builds/swift-3.0-preview-1/ubuntu1404/swift-3.0-PREVIEW-1/swift-3.0-PREVIEW-1-ubuntu14.04.tar.gz
 RUN tar -xzf swift-3.0-PREVIEW-1-ubuntu14.04.tar.gz
 RUN mv swift-3.0-PREVIEW-1-ubuntu14.04 /swift30
