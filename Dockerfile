@@ -28,7 +28,7 @@ RUN apt-get update
 RUN echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
 RUN apt-get install -y oracle-java8-installer
-RUN apt-get install oracle-java8-set-default
+RUN apt-get install -y oracle-java8-set-default
 
 #install maven
 RUN wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
