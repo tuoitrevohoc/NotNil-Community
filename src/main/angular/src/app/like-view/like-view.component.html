@@ -12,7 +12,14 @@
     {{ likes[0].fullName }}
   </a> 
   <span *ngIf="likes.length > 1">
-    and {{ likes.length - 1 }} <a>other<span *ngIf="likes.length > 2">s</span></a>
+    and 
+    <div class="ui dropdown">
+      <div class="text">{{ likes.length - 1 }} other<span *ngIf="likes.length > 2">s</span></div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item" *ngFor="let item of likes">{{ item.fullName }}</div>
+      </div>
+    </div>
   </span> 
   like<span *ngIf="likes.length == 1">s</span>
   this
