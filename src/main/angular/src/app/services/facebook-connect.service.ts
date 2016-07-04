@@ -41,7 +41,6 @@ export class FacebookConnectService {
   // login
   login(response: Function) {
     FB.login((data) => {
-      console.log(data)
       response((data as any).authResponse.accessToken)
     })
   }

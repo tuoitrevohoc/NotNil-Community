@@ -73,3 +73,10 @@ code {
 i.big.icon {
     font-size: 100px !important;
 }
+
+.reward, .badge {
+    color: #21ba45;
+}
+.badge {
+    font-weight: bolder;
+}
