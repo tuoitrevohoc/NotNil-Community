@@ -18,12 +18,12 @@ RUN apt-get install -y clang libicu-dev
 RUN wget https://swift.org/builds/swift-3.0-preview-1/ubuntu1404/swift-3.0-PREVIEW-1/swift-3.0-PREVIEW-1-ubuntu14.04.tar.gz
 RUN tar -xzf swift-3.0-PREVIEW-1-ubuntu14.04.tar.gz
 RUN mv swift-3.0-PREVIEW-1-ubuntu14.04 /swift30
-RUN export PATH=$PATH:/swift30/usr/bin
 
 #install java
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
+
 #enable silent install
 RUN echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
@@ -42,9 +42,7 @@ RUN mv NotNil-Community /app
 
 WORKDIR /app
 
-RUN chmod +x ./build-and-run.sh
-
-ENTRYPOINT ./build-and-run.sh
+ENTRYPOINT ./entry.sh
 
 
 
