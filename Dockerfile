@@ -1,6 +1,10 @@
 FROM frolvlad/alpine-oraclejdk8:slim
 MAINTAINER Daniel <tuoitrevohoc@me.com>
 
+# install curl
+RUN apt-get update
+RUN apt-get install -y curl wget
+
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 RUN apt-get update
