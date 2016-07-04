@@ -42,6 +42,7 @@ RUN git clone https://github.com/tuoitrevohoc/NotNil-Community.git
 RUN mv NotNil-Community /app
 
 WORKDIR /app
+RUN ./build.sh
 
 ENTRYPOINT ./entry.sh
 

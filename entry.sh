@@ -1,2 +1,4 @@
+#!/usr/bin/env bash
 git pull
-./build-and-run.sh
+./build.sh
+./run.sh
