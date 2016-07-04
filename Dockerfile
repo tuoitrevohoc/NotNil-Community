@@ -21,6 +21,7 @@ RUN mv swift-3.0-PREVIEW-1-ubuntu14.04 /swift30
 RUN export PATH=$PATH:/swift30/usr/bin
 
 #install java
+RUN apt-get install software-properties-common
 RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
 RUN apt-get install -y oracle-java8-installer
