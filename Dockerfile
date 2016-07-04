@@ -13,12 +13,6 @@ RUN apt-get install -y nodejs build-essential git
 # install angular-cli
 RUN npm install -g angular-cli
 
-#install swift
-RUN apt-get install -y clang libicu-dev
-RUN wget https://swift.org/builds/swift-3.0-preview-1/ubuntu1404/swift-3.0-PREVIEW-1/swift-3.0-PREVIEW-1-ubuntu14.04.tar.gz
-RUN tar -xzf swift-3.0-PREVIEW-1-ubuntu14.04.tar.gz
-RUN mv swift-3.0-PREVIEW-1-ubuntu14.04 /swift30
-
 #install java
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:webupd8team/java
@@ -35,6 +29,13 @@ RUN wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven
 RUN tar -xzf apache-maven-3.3.9-bin.tar.gz
 RUN mv apache-maven-3.3.9 /maven
 RUN export PATH=$PATH:/maven/bin
+
+#install swift
+RUN apt-get install -y clang libicu-dev
+RUN wget https://swift.org/builds/swift-3.0-preview-1/ubuntu1404/swift-3.0-PREVIEW-1/swift-3.0-PREVIEW-1-ubuntu14.04.tar.gz
+RUN tar -xzf swift-3.0-PREVIEW-1-ubuntu14.04.tar.gz
+RUN mv swift-3.0-PREVIEW-1-ubuntu14.04 /swift30
+
 
 #get the source code
 RUN git clone https://github.com/tuoitrevohoc/NotNil-Community.git
