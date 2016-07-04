@@ -37,8 +37,11 @@ RUN mv apache-maven-3.3.9 /maven
 RUN export PATH=$PATH:/maven/bin
 
 #get the source code
-WORKDIR /app
 RUN git clone https://github.com/tuoitrevohoc/NotNil-Community.git
+RUN mv NotNil-Community /app
+
+WORKDIR /app
+
 RUN chmod +x ./build-and-run.sh
 
 ENTRYPOINT ./build-and-run.sh
