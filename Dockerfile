@@ -33,7 +33,7 @@ RUN apt-get install -y oracle-java8-set-default
 #install maven
 RUN wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 RUN tar -xzf apache-maven-3.3.9-bin.tar.gz
-RUN mv apache-maven-3.3.9-bin /maven
+RUN mv apache-maven-3.3.9 /maven
 RUN export PATH=$PATH:/maven/bin
 
 #get the source code
