@@ -44,7 +44,6 @@ export class CodeEditorComponent implements OnInit {
         this.editor.setReadOnly(this.readOnly)
         
         this.editor.setOptions({
-            fontFamily: "SF Mono Regular, Menlo",
             fontSize: "14px"
         })
 
