@@ -80,3 +80,28 @@ i.big.icon {
 .badge {
     font-weight: bolder;
 }
+
+.playground {
+  position: fixed;
+  top: 47px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: table-row;
+}
+
+.playground .code-editor {
+    height: 100%;
+    width: 50%;
+    float: left;
+}
+
+.bottom.menu {
+    position: fixed;
+    bottom: 0px;
+    height: 48px;
+    right: 0px;
+    left: 0px;
+    z-index: 1000;
+    border-radius: 0px;
+}

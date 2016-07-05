@@ -11,6 +11,9 @@ export class CodeEditorComponent implements OnInit {
     
     @ViewChild("editordiv") editorDiv: ElementRef
     @Input() code: String       
+    @Input() theme: String
+    @Input() readOnly: String
+
     @Output("change") changeEvent = new EventEmitter<string>()
 
     public editor: any    
@@ -26,13 +29,15 @@ export class CodeEditorComponent implements OnInit {
         var div = this.editorDiv.nativeElement
         this.editor = ace.edit(div)
         this.editor.$blockScrolling = Infinity
-        this.editor.setTheme("ace/theme/monokai")
+        this.editor.setTheme(this.theme || "ace/theme/monokai")
         this.editor.getSession().setMode("ace/mode/swift")
         this.editor.setValue(this.code || '', 1)
         this.editor.getSession().on('change', () => {
             this.changeEvent.next(this.editor.getValue())
             this.editor.resize()
         })
+
+        this.editor.setReadOnly(this.readOnly)
         
         this.editor.setOptions({
             fontFamily: "SF Mono Regular, Menlo",

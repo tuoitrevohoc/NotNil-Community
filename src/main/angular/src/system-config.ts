@@ -42,6 +42,7 @@ const barrels: string[] = [
   'app/code-editor',
   'app/challenge-page',
   'app/error',
+  'app/playground',
   /** @cli-barrel */
 ];
 

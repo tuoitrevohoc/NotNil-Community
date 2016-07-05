@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod
     @RequestMapping("/challenge/**",
                     "/user/**",
                     "/reply/**",
+                    "/playground/**",
                     method = arrayOf(RequestMethod.GET))
     fun redirect(): String {
         return "forward:/index.html"
