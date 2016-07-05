@@ -15,6 +15,7 @@ export class CodeEditorComponent implements OnInit {
     @Input() readOnly: String
 
     @Output("change") changeEvent = new EventEmitter<string>()
+    @Output("delta") deltaEvent = new EventEmitter<string>()
     @Output("run") runEvent = new EventEmitter<string>()
 
     public editor: any    
@@ -33,8 +34,10 @@ export class CodeEditorComponent implements OnInit {
         this.editor.setTheme(this.theme || "ace/theme/monokai")
         this.editor.getSession().setMode("ace/mode/swift")
         this.editor.setValue(this.code || '', 1)
-        this.editor.getSession().on('change', () => {
+
+        this.editor.getSession().on('change', (event) => {
             this.changeEvent.next(this.editor.getValue())
+            this.deltaEvent.next(event)
             this.editor.resize()
         })
 
@@ -53,6 +56,10 @@ export class CodeEditorComponent implements OnInit {
             },
             readOnly: false
         })
+    }
+
+    applyDelta(delta: any) {
+        this.editor.getSession().getDocument().applyDelta(delta)
     }
 
     // set code

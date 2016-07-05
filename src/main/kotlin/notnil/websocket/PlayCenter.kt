@@ -37,33 +37,35 @@ class PlayCenter: TextWebSocketHandler() {
             if (lookUpSession.containsKey(session)) {
                 val room = lookUpSession[session]
 
-                if (session === room?.owner) {
-                    if (message.action == "update") {
-                        room?.updateCode(message.content)
-                    } else {
-                        room?.update(message.action, message.content)
-                    }
+                if (message.action == "setCode") {
+                    room?.setCode(message.content)
+                } else {
+                    room?.update(session!!, message.action, message.content)
                 }
 
             } else {
                 if (message.action == "create") {
                     val id = UUID.randomUUID().toString().substring(0, 10)
-                    val room = PlayRoom(id, session!!)
-
+                    val room = PlayRoom(id)
+                    room.add(session!!)
                     lookUpSession[session] = room
                     lookUpRoom[id] = room
 
                     session.send("ok", id)
                 } else if (message.action == "subscribe") {
                     val id = message.content
-                    val room = lookUpRoom[id]
+                    var room = lookUpRoom[id]
 
-                    room?.add(session!!)
+                    if (room == null) {
+                        room = PlayRoom(id)
+                    }
+
+                    lookUpSession[session!!] = room
+                    room.add(session)
                 }
             }
         } else {
             session!!.send("pong", "")
-
         }
     }
 

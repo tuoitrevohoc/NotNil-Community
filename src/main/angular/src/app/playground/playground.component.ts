@@ -16,8 +16,9 @@ export class PlaygroundComponent implements OnInit {
   @ViewChild("output") output: CodeEditorComponent
 
   shareUrl = null
-  isOwner = false
   loading = false
+  connected = false
+  update = true
 
   constructor(private playgroundService: PlayGroundService,
               private activatedRoute: ActivatedRoute) {
@@ -39,9 +40,6 @@ export class PlaygroundComponent implements OnInit {
 
   ngAfterViewInit() {
     this.codeEditor.setCode("print(\"Hello Swift\")")
-    if (this.shareUrl) {
-      this.codeEditor.setReadOnly(true)
-    }
   }
 
   startPlaying(code) {
@@ -50,10 +48,7 @@ export class PlaygroundComponent implements OnInit {
       this.playgroundService.play(code)
           .subscribe((data) => {
             this.output.setCode(data.text())
-
-            if (this.isOwner) {
-              this.playgroundService.send(new Message("updateOuput", data.text()))
-            }
+            this.playgroundService.send(new Message("updateOuput", data.text()))
 
             this.codeEditor.focus()
             this.loading = false
@@ -69,18 +64,27 @@ export class PlaygroundComponent implements OnInit {
   onMessage(message: Message) {
     if (message.action == "ok") {
       this.shareUrl = "http://" + window.location.host + "/play/" + message.content
-      this.isOwner = true
+
+      this.playgroundService.send(new Message("setCode", this.codeEditor.getCode()))
+      this.connected = true
     } else if (message.action == "update") {
-      this.codeEditor.setCode(message.content)
+      var change = JSON.parse(message.content)
+      this.update = false
+      this.codeEditor.applyDelta(change)
+      this.update = true
     } else if (message.action == "updateOuput") {
       this.output.setCode(message.content)
+    } else if (message.action == "setCode") {
+      this.codeEditor.setCode(message.content)
+      this.connected = true
     }
   }
 
   // code change
-  codeChange(code: string) {
-    if (this.isOwner) {
-      this.playgroundService.send(new Message("update", code))
+  codeChange(change: any) {
+    if (this.connected && this.update) {
+      this.playgroundService.send(new Message("update", JSON.stringify(change)))
+      this.playgroundService.send(new Message("setCode", this.codeEditor.getCode()))
     }
   }
 

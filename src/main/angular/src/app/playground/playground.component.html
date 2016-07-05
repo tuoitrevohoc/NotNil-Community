@@ -1,6 +1,6 @@
 <div class="playground">
   <code-editor #codeEditor (run)="startPlaying($event)"
-                            (change)="codeChange($event)">
+                            (delta)="codeChange($event)">
   </code-editor>
   <code-editor #output 
       [readOnly]="true" 

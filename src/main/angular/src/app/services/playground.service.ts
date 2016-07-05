@@ -32,7 +32,10 @@ export class PlayGroundService {
   /// send message
   send(message: Message) {
     var text = JSON.stringify(message)
-    this.socket.send(text)
+
+    if (this.socket) {
+      this.socket.send(text)
+    }
   }
 
   /// create the playground  

@@ -8,8 +8,7 @@ import java.util.*
  */
 
 class PlayRoom (
-        public val id: String,
-        public var owner: WebSocketSession?
+        public val id: String
 ) {
 
     /**
@@ -25,17 +24,15 @@ class PlayRoom (
     fun add(member: WebSocketSession) {
         members.add(member)
 
-        member.send("update", code)
+        if (members.count() > 1) {
+            member.send("setCode", code)
+        }
     }
 
     /**
      * remove a member
      */
     fun remove(member: WebSocketSession) {
-        if (member == owner) {
-            owner = null
-        }
-
         members.remove(member)
     }
 
@@ -43,26 +40,24 @@ class PlayRoom (
      * is empty
      */
     fun empty(): Boolean {
-        return members.isEmpty() && owner == null
-    }
-
-    /**
-     * update code
-     */
-    fun updateCode(code: String) {
-        for (member in members) {
-            member.send("update", code)
-        }
-
-        this.code = code
+        return members.isEmpty()
     }
 
     /**
      * update
      */
-    fun update(name: String, value: String) {
+    fun update(from: WebSocketSession, name: String, value: String) {
         for (member in members) {
-            member.send(name, value)
+            if (member != from) {
+                member.send(name, value)
+            }
         }
+    }
+
+    /**
+     * Set code
+     */
+    fun setCode(content: String) {
+        this.code = content
     }
 }
