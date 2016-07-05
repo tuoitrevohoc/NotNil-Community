@@ -20,6 +20,9 @@ export class PlayGroundService {
   // function
   callBack: (message: Message) => void
 
+  // on close
+  onClose: () => void
+
   /// constructor of the user service
   constructor(private http: Http) {
   }
@@ -39,13 +42,18 @@ export class PlayGroundService {
   }
 
   /// create the playground  
-  create(callBack: (message: Message) => void) {
+  create(callBack: (message: Message) => void, onClose: () => void) {
     this.socket = new WebSocket(this.wsUrl)
     this.callBack = callBack
+    this.onClose = onClose
 
     // open
     this.socket.onopen = (event) => {
       this.send(new Message("create"))
+    }
+
+    this.socket.onclose = () => {
+      this.zone.run(() => this.onClose())
     }
 
     // event  
@@ -59,9 +67,10 @@ export class PlayGroundService {
   }
 
   /// create the playground  
-  subscribe(id: string, callBack: (message: Message) => void) {
+  subscribe(id: string, callBack: (message: Message) => void, onClose: () => void) {
     this.socket = new WebSocket(this.wsUrl)
     this.callBack = callBack
+    this.onClose = onClose
 
     // open
     this.socket.onopen = (event) => {
@@ -71,6 +80,10 @@ export class PlayGroundService {
     // event  
     this.socket.onmessage = (event) => {
       this.zone.run(() => this.callBack(JSON.parse(event.data) as Message))
+    }
+
+    this.socket.onclose = () => {
+      this.zone.run(() => this.onClose())
     }
 
     setInterval(() => {

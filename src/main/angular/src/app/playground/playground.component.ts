@@ -15,6 +15,7 @@ export class PlaygroundComponent implements OnInit {
   @ViewChild("codeEditor") codeEditor: CodeEditorComponent
   @ViewChild("output") output: CodeEditorComponent
 
+  playId: string
   shareUrl = null
   loading = false
   connected = false
@@ -26,8 +27,11 @@ export class PlaygroundComponent implements OnInit {
       .subscribe((params) => {
         var id = params["playId"]
         if (id) {
+          this.playId = id
+
           this.playgroundService.subscribe(id,
-            (message) => this.onMessage(message)
+            (message) => this.onMessage(message),
+            () => this.retry()
           )
 
           this.shareUrl = "http://" + window.location.host + "/play/" + id
@@ -57,7 +61,16 @@ export class PlaygroundComponent implements OnInit {
   }
 
   startSharing() {
-    this.playgroundService.create((message) => this.onMessage(message))
+    this.playgroundService.create((message) => this.onMessage(message),
+          () => this.retry())
+  }
+
+  retry() {
+    this.connected = false
+    this.playgroundService.subscribe(this.playId,
+            (message) => this.onMessage(message),
+            () => this.retry()
+          )
   }
 
   // on message
