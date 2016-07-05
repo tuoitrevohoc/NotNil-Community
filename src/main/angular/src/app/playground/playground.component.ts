@@ -15,8 +15,9 @@ export class PlaygroundComponent implements OnInit {
   @ViewChild("codeEditor") codeEditor: CodeEditorComponent
   @ViewChild("output") output: CodeEditorComponent
 
-  shareUrl: string = null
-  isOwner: boolean = false
+  shareUrl = null
+  isOwner = false
+  loading = false
 
   constructor(private playgroundService: PlayGroundService,
               private activatedRoute: ActivatedRoute) {
@@ -44,16 +45,20 @@ export class PlaygroundComponent implements OnInit {
   }
 
   startPlaying(code) {
-    this.playgroundService.play(code)
-        .subscribe((data) => {
-          this.output.setCode(data.text())
+    if (!this.loading) {
+      this.loading = true
+      this.playgroundService.play(code)
+          .subscribe((data) => {
+            this.output.setCode(data.text())
 
-          if (this.isOwner) {
-            this.playgroundService.send(new Message("updateOuput", data.text()))
-          }
+            if (this.isOwner) {
+              this.playgroundService.send(new Message("updateOuput", data.text()))
+            }
 
-          this.codeEditor.focus()
-        })
+            this.codeEditor.focus()
+            this.loading = false
+          }, () => this.loading = false )
+    }
   }
 
   startSharing() {

@@ -8,8 +8,11 @@
       [theme]="'ace/theme/twilight'">
   </code-editor>
   <div class="ui inverted bottom pointing menu">
-    <span class="brand item">
+    <span *ngIf="!loading" class="brand item">
       Ctrl/Cmd + Enter to run...
+    </span>
+    <span *ngIf="loading" class="loading item">
+      Running....
     </span>
     <span class="item" *ngIf="!shareUrl">
       <button class="ui positive button" (click)="startSharing()">
