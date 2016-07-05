@@ -33,32 +33,33 @@ class PlayCenter: TextWebSocketHandler() {
      */
     override fun handleTextMessage(session: WebSocketSession?, textMessage: TextMessage?) {
         val message = parseMessage(textMessage)
+        if (message.action != "ping") {
+            if (lookUpSession.containsKey(session)) {
+                val room = lookUpSession[session]
 
-        if (lookUpSession.containsKey(session)) {
-            val room = lookUpSession[session]
-
-            if (session === room?.owner) {
-                if (message.action == "update") {
-                    room?.updateCode(message.content)
-                } else {
-                    room?.update(message.action, message.content)
+                if (session === room?.owner) {
+                    if (message.action == "update") {
+                        room?.updateCode(message.content)
+                    } else {
+                        room?.update(message.action, message.content)
+                    }
                 }
-            }
 
-        } else {
-            if (message.action == "create") {
-                val id = UUID.randomUUID().toString().substring(0, 10)
-                val room = PlayRoom(id, session!!)
+            } else {
+                if (message.action == "create") {
+                    val id = UUID.randomUUID().toString().substring(0, 10)
+                    val room = PlayRoom(id, session!!)
 
-                lookUpSession[session] = room
-                lookUpRoom[id] = room
+                    lookUpSession[session] = room
+                    lookUpRoom[id] = room
 
-                session.send("ok", id)
-            } else if (message.action == "subscribe") {
-                val id = message.content
-                val room = lookUpRoom[id]
+                    session.send("ok", id)
+                } else if (message.action == "subscribe") {
+                    val id = message.content
+                    val room = lookUpRoom[id]
 
-                room?.add(session!!)
+                    room?.add(session!!)
+                }
             }
         }
     }

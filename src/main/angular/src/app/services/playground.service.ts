@@ -49,6 +49,10 @@ export class PlayGroundService {
     this.socket.onmessage = (event) => {
       this.zone.run(() => this.callBack(JSON.parse(event.data) as Message))
     }
+
+    setInterval(() => {
+      this.send(new Message("ping"))
+    }, 1000)
   }
 
   /// create the playground  
@@ -65,5 +69,9 @@ export class PlayGroundService {
     this.socket.onmessage = (event) => {
       this.zone.run(() => this.callBack(JSON.parse(event.data) as Message))
     }
+
+    setInterval(() => {
+      this.send(new Message("ping"))
+    }, 1000)
   }
 }
