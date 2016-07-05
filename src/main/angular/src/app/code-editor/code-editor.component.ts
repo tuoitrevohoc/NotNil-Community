@@ -65,7 +65,7 @@ export class CodeEditorComponent implements OnInit {
     focus() {
         this.editor.focus()
     }
-    
+
     // get value of this code editor
     getCode() : string {
         return this.editor.getValue()
@@ -74,5 +74,9 @@ export class CodeEditorComponent implements OnInit {
     // set the mode for the code
     setMode(mode: string) {
         this.editor.getSession().setMode("ace/mode/" + mode)
+    }
+
+    setReadOnly(mode: boolean) {
+        this.editor.setReadOnly(mode)
     }
 }

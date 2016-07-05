@@ -1,5 +1,6 @@
 <div class="playground">
-  <code-editor #codeEditor (run)="startPlaying($event)">
+  <code-editor #codeEditor (run)="startPlaying($event)"
+                            (change)="codeChange($event)">
   </code-editor>
   <code-editor #output 
       [readOnly]="true" 
@@ -10,5 +11,17 @@
     <span class="brand item">
       Ctrl/Cmd + Enter to run...
     </span>
+    <span class="item" *ngIf="!shareUrl">
+      <button class="ui positive button" (click)="startSharing()">
+        <i class="share icon"></i>
+        Share
+      </button>
+    </span>
+    <a *ngIf="shareUrl" type="text" class="ui item" style="user-select: all; -webkit-user-select: all">
+      {{ shareUrl }}
+    </a>
+    <a *ngIf="shareUrl" class="item">
+      <i class="copy icon"></i>
+    </a>
   </div>
 </div>

@@ -8,7 +8,8 @@ const routes: RouterConfig = [
     { path: '', component: FeedViewComponent },
     { path: 'challenge/:challengeId', component: ChallengePageComponent },
     { path: 'challenge/:challengeId/edit', component: ChallengeEditorComponent },
-    { path: 'playground', component: PlaygroundComponent }
+    { path: 'play/:playId', component: PlaygroundComponent },
+    { path: 'play', component: PlaygroundComponent }
 ]
 
 export const AppRoutes = [
