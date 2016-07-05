@@ -22,8 +22,6 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration
             mongoDBURI = "mongodb://localhost/notnil"
         }
 
-        System.out.print("MongoDB URI: " + mongoDBURI);
-        
         MongoClientURI(mongoDBURI)
     }
 
