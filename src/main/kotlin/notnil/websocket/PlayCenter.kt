@@ -61,6 +61,9 @@ class PlayCenter: TextWebSocketHandler() {
                     room?.add(session!!)
                 }
             }
+        } else {
+            session!!.send("pong", "")
+
         }
     }
 
