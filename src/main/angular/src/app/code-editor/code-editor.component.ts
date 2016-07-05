@@ -15,6 +15,7 @@ export class CodeEditorComponent implements OnInit {
     @Input() readOnly: String
 
     @Output("change") changeEvent = new EventEmitter<string>()
+    @Output("run") runEvent = new EventEmitter<string>()
 
     public editor: any    
 
@@ -42,7 +43,16 @@ export class CodeEditorComponent implements OnInit {
         this.editor.setOptions({
             fontFamily: "SF Mono Regular, Menlo",
             fontSize: "14px"
-        });
+        })
+
+        this.editor.commands.addCommand({
+            name: 'myCommand',
+            bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
+            exec: (editor) => {
+                this.runEvent.emit(editor.getValue())
+            },
+            readOnly: false
+        })
     }
 
     // set code
@@ -52,6 +62,10 @@ export class CodeEditorComponent implements OnInit {
         this.editor.focus()
     }
 
+    focus() {
+        this.editor.focus()
+    }
+    
     // get value of this code editor
     getCode() : string {
         return this.editor.getValue()

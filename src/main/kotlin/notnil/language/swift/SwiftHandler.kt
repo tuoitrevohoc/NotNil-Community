@@ -22,6 +22,38 @@ open class SwiftHandler: LanguageHandler {
      */
     val swiftPath = "swift"
 
+
+    /**
+     * Execute code and return output
+     */
+    override fun execute(code: String): String {
+        val uuid = UUID.randomUUID().toString()
+        val file = File.createTempFile(uuid, ".swift")
+
+        val printer = PrintWriter(file)
+        printer.println("import Foundation")
+        printer.print(code)
+
+        printer.close()
+
+        val processBuilder = ProcessBuilder(swiftPath, file.absolutePath)
+        val process = processBuilder.start()
+
+        process.waitFor(5000, TimeUnit.MILLISECONDS)
+
+        var output = process.inputStream.readToEnd()
+        val error = process.errorStream.readToEnd().replace(file.absolutePath, "")
+
+        if (process.isAlive) {
+            process.destroy()
+            output = "Execution time out!!! "
+        } else if (process.exitValue() != 0) {
+            output = error
+        }
+
+        return error + output
+    }
+
     /**
      * execute a challenge with a solution
      */

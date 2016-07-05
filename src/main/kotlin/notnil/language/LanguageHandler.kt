@@ -8,8 +8,13 @@ import notnil.model.Solution
  */
 interface LanguageHandler {
 
-    ///
-    /// execute an answer for a problem
-    ///
+    /**
+     * Execute code and return output
+     */
+    fun execute(code: String): String
+
+    /**
+     * Execute code and return output
+     */
     fun execute(challenge: Challenge, solution: Solution)
 }

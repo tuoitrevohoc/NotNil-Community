@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Http } from '@angular/http'
 
 @Injectable()
-class PlayGroundService {
+export class PlayGroundService {
 
   /// constructor of the user service
   constructor(private http: Http) {
@@ -10,6 +10,10 @@ class PlayGroundService {
 
   /// play a code
   play(code: String) {
-    return this.http.post("/api/play", JSON.stringify(code))
+    return this.http.post("/api/play", code)
   } 
+
+  onRun(code: String) {
+
+  }
 }

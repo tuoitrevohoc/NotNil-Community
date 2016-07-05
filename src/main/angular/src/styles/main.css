@@ -96,6 +96,10 @@ i.big.icon {
     float: left;
 }
 
+.fixed.menu {
+    height: 47px;
+}
+
 .bottom.menu {
     position: fixed;
     bottom: 0px;
