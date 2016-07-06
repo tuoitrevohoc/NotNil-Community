@@ -51,7 +51,11 @@
           </div>
           <div [innerHTML]="reply.content | markUp">
           </div>
-          <code-editor [code]="reply.code">
+          <code-editor *ngIf="reply.code" 
+                      [code]="reply.code" 
+                      [theme]="'ace/theme/kuroir'"
+                      [readOnly]="true"
+                      class="small">
           </code-editor>
           <div class="meta">
             <app-like-view
@@ -68,9 +72,9 @@
               <span *ngIf="reply.reward" class="reward">
                   <i class="money icon"></i>{{ reply.reward }} 
               </span>
-              <a *ngIf="reply.code">
+              <!--<a *ngIf="reply.code">
                   <i class="code icon"></i>View Solution
-              </a>
+              </a>-->
               <a *ngIf="currentUser && (currentUser.id == reply.creator.id || currentUser.admin)"
                     (click)="deleteReply(reply)">
                   Delete
