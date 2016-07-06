@@ -14,7 +14,6 @@ RUN apt-get install -y nodejs build-essential git
 RUN npm install -g angular-cli
 
 #get the source code
-RUN rm -rf /app
 RUN git clone https://github.com/tuoitrevohoc/NotNil-Community.git
 RUN mv NotNil-Community /app
 

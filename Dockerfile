@@ -38,11 +38,11 @@ RUN mv swift-3.0-PREVIEW-1-ubuntu14.04 /swift30
 
 
 #get the source code
+RUN rm -rf /app
 RUN git clone https://github.com/tuoitrevohoc/NotNil-Community.git
 RUN mv NotNil-Community /app
 
 WORKDIR /app
-RUN chmod +x ./build.sh
 RUN ./build.sh
 
 ENTRYPOINT ./entry.sh
