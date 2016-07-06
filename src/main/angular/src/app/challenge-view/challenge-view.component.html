@@ -51,6 +51,8 @@
           </div>
           <div [innerHTML]="reply.content | markUp">
           </div>
+          <code-editor [code]="reply.code">
+          </code-editor>
           <div class="meta">
             <app-like-view
                     [likes]="reply.likes"
@@ -81,7 +83,8 @@
       Reply has been deleted!!
     </div>
   </div>
-  <code-editor [hidden]="!currentUser"
+  <code-editor #editor 
+                [hidden]="!currentUser"
                 (change)="codeChanged($event)"
                 [class]="withSolution ? '' : 'small'">
   </code-editor>

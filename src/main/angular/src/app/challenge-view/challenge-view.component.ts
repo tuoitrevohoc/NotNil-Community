@@ -41,7 +41,7 @@ export class ChallengeViewComponent extends BaseComponent implements OnInit {
   reply: Solution
 
   // code editor view child
-  @ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent
+  @ViewChild("editor") codeEditor: CodeEditorComponent
 
   // the constructor
   constructor(private challengeService: ChallengeService,

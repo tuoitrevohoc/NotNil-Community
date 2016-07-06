@@ -106,7 +106,7 @@
     </tbody>
   </table>
   <div *ngIf="showPostForm" class="ui segment">
-    <button [disabled]="parseError"  
+    <button   
                 [class]="(loading ? 'loading' : '') + ' ui positive right labeled icon button'"
                 (click)="savePostClicked()">
       Post
