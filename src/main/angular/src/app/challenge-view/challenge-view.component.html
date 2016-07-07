@@ -52,7 +52,7 @@
           <div [innerHTML]="reply.content | markUp">
           </div>
           <code-editor *ngIf="reply.code" 
-                      [code]="reply.code" 
+                      [code]="reply.code.trim()" 
                       [theme]="'ace/theme/kuroir'"
                       [readOnly]="true"
                       class="small">
