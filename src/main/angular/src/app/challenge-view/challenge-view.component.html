@@ -72,8 +72,11 @@
               <span *ngIf="reply.reward" class="reward">
                   <i class="money icon"></i>{{ reply.reward }} 
               </span>
-              <a *ngIf="reply.code" (click)="reply.showSolution = true">
-                  <i class="code icon"></i>View Solution
+              <a *ngIf="reply.code" (click)="reply.showSolution = !reply.showSolution">
+                  <i class="code icon"></i>
+                  <span *ngIf="!reply.showSolution">View</span>
+                  <span *ngIf="reply.showSolution">Hide</span> 
+                  Solution
               </a>
               <a *ngIf="currentUser && (currentUser.id == reply.creator.id || currentUser.admin)"
                     (click)="deleteReply(reply)">
