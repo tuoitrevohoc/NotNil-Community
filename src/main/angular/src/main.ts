@@ -6,6 +6,7 @@ import { GlobalService } from './app/services/global.service'
 import { UserService } from './app/services/user.service'
 import { ChallengeService } from './app/services/challenge.service'
 import { AppRoutes } from './app/app.routes'
+import { Angulartics2 } from 'angulartics2'
 
 import { Http, ConnectionBackend, HTTP_PROVIDERS, BaseRequestOptions, RequestOptions, Headers } from '@angular/http'
 
@@ -28,6 +29,7 @@ bootstrap(AppComponent,
                 ChallengeService,
                 GlobalService,
                 provide(RequestOptions, {useClass: HttpOptions}),
-                AppRoutes
+                AppRoutes,
+                Angulartics2
             ])
 

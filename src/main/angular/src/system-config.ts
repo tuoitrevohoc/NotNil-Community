@@ -54,6 +54,8 @@ barrels.forEach((barrelName: string) => {
 /** Type declaration for ambient System. */
 declare var System: any;
 
+cliSystemConfigPackages["/angulartics2"] = {"defaultExtension": "js"}
+
 // Apply the CLI SystemJS configuration.
 System.config({
   map: {
