@@ -1,0 +1,29 @@
+<div class="ui stacked segments">
+  <div class="ui segment" [innerHtml]="path.intro | markUp">
+  </div>
+  <code-editor #intro
+    [code]="path.intro"
+    mode="markdown"
+    (change)="updateIntro($event)"
+    class="small">
+  </code-editor>
+</div>
+<div *ngFor="let challenge of path.challenges">
+  <app-challenge-editor [challenge]="challenge"></app-challenge-editor>
+</div>
+<div class="ui stacked segments">
+  <div class="ui segment">
+    <div class="ui feed">
+      <div class="event">
+        <div class="ui right aligned category search item">
+            <a 
+              id="add-challenge"
+              (click)="addChallenge()"
+              class="ui primary button">
+                <i class="add icon"></i> Add Challenge
+            </a>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

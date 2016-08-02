@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { BaseComponent } from '../base.component'
 
@@ -39,7 +39,7 @@ export class ChallengeEditorComponent extends BaseComponent implements OnInit {
 
   isEditting = false
 
-  challenge: Challenge = {
+  @Input() challenge: Challenge = {
     definition: {
       input: [],
       output: {}
@@ -97,7 +97,6 @@ assert(expected: -1, actual: add(a: 1, b: -2))
 
       this.sub = activatedRoute.params
               .subscribe(params => {
-          console.log(params)
           if (params["challengeId"]) {
             if (this.currentUser) {
               this.loadChallenge(params["challengeId"])
@@ -251,7 +250,7 @@ assert(expected: -1, actual: add(a: 1, b: -2))
     var match = code.replace(/\n/g, '<br />').match(/\/\*+(.+)\*+\//)
 
     if (match[1]) {
-      document = match[1]
+      document = match[1].replace(/<br \/>/g, "\n").trim()
     }
 
     return document

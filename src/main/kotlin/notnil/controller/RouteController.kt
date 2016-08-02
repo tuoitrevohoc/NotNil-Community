@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod
                     "/user/**",
                     "/reply/**",
                     "/play/**",
+                    "/path/**",
                     method = arrayOf(RequestMethod.GET))
     fun redirect(): String {
         return "forward:/index.html"

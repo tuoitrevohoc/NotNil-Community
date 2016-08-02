@@ -56,3 +56,14 @@ export interface Challenge {
   hiddenTests?: Test[]
   createAt?: Date
 }
+
+// a path
+export interface Path {
+  id?: string
+  title?: string
+  intro?: string
+  challenges: Challenge[]
+  users: User[]
+  likes?: User[]
+  creator?: User
+}
